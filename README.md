@@ -1,25 +1,64 @@
-# ProteinStabilityPredictor
+# Predicting Protein Stability Changes (ΔΔG) with Deep Learning
 
-ProteinStabilityPredictor is a machine learning-based tool designed to predict the stability changes (ΔΔG) in proteins caused by mutations. This project leverages advanced feature engineering, outlier handling, and deep learning techniques to provide accurate predictions of protein stability changes.
+## Project Overview
+This project uses deep learning to predict changes in protein stability (ΔΔG) caused by mutations. Protein stability is key to proper function, and understanding changes due to mutations can help in designing stable proteins and studying genetic disorders.
 
-## Features
+## Dataset: ThermoMutDB
+**ThermoMutDB** is used in this project. It contains experimental data on protein stability changes due to mutations.  
+**How to get it:**  
+- Search for ThermoMutDB on ResearchGate or in related publications.
+- Place the downloaded file as `data/thermomutdb.json`.
 
-- **Feature Engineering**:
-  - One-hot encoding of categorical variables such as secondary structure, mutation type, and amino acids.
-  - Calculation of physicochemical property changes (e.g., hydrophobicity, volume, and charge).
-- **Outlier Handling**:
-  - Removal of outliers using statistical methods like Z-scores or IQR.
-- **Machine Learning Models**:
-  - Support for Random Forest, Gradient Boosting, and Deep Learning models using TensorFlow/Keras.
-- **Evaluation Metrics**:
-  - Mean Squared Error (MSE), R² Score, Mean Absolute Error (MAE), and ROC AUC for classification tasks.
-- **Visualization**:
-  - Actual vs. Predicted plots for regression.
-  - ROC AUC curves for classification.
+## Project Workflow
 
-## Installation
+### 1. Data Loading
+Load the JSON data into a pandas DataFrame:
+```python
+import pandas as pd
+df = pd.read_json('data/thermomutdb.json')
+```
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/ProteinStabilityPredictor.git
-   cd ProteinStabilityPredictor
+### 2. Data Preprocessing
+- **Handle Missing Values**: Impute missing values (using the median for numeric data).
+- **Feature Engineering**: Extract and create features (e.g., one-hot encoding for categorical data, hydrophobicity, and molecular weight changes).
+
+### 3. Deep Learning Model
+- **Model Architecture**: A deep neural network (DNN) with multiple layers, dropout for regularization, and ReLU activations.
+- **Training**: Experiment with different architectures and hyperparameters to improve performance.
+- **Saving the Model**: The best model is saved as `models/best_model.h5`.
+
+### 4. Model Evaluation
+Key metrics include:
+- R² (Coefficient of Determination)
+- RMSE (Root Mean Squared Error)
+- MAE (Mean Absolute Error)
+
+### 5. Using the Model
+Load the trained model and make predictions:
+```python
+from tensorflow.keras.models import load_model
+model = load_model('models/best_model.h5')
+predictions = model.predict(new_data)
+```
+Make sure your input data is preprocessed similarly to the training data.
+
+## Required Libraries
+- numpy
+- pandas
+- matplotlib
+- seaborn
+- scikit-learn
+- tensorflow
+- scipy
+
+## Contributions & Future Work
+Contributions are welcome. Future work may include:
+- Advanced hyperparameter tuning.
+- Feature importance analysis.
+- Further refinement of the neural network architecture.
+
+## License
+This project is released under the MIT License. Feel free to fork, modify, and contribute.
+
+## Contact
+For questions or collaboration, please reach out!
